@@ -12,21 +12,78 @@ class BooksApp extends React.Component {
     wantToRead: [],
     read: []
   };
-  
+
   moveBook = (shelf, book) => BooksAPI.update(book, shelf)
     .then(() => {
-      this.setState({
-        shelf: this.state[shelf].push(book)
-      });
+      this.removeFromShelf(book);
+      this.addToShelf(shelf, book);
     });
-  
+
+  removeFromShelf = (book) => {
+    const {shelf, id} = book;
+
+    if (shelf === 'currentlyReading') {
+      this.removeFromCurrentlyReading(id);
+    } else if (shelf === 'wantToRead') {
+      this.removeFromWantToRead(id);
+    } else if (shelf === 'read') {
+      this.removeFromRead(id);
+    }
+  };
+
+  addToShelf = (shelf, book) => {
+    if (shelf === 'currentlyReading') {
+      this.addToCurrentlyReading(book);
+    } else if (shelf === 'wantToRead') {
+      this.addToWantToRead(book);
+    } else if (shelf === 'read') {
+      this.addToRead(book);
+    }
+  }
+
+  removeFromCurrentlyReading = (id) => {
+    this.setState((prevState) => ({
+      currentlyReading: prevState.currentlyReading.filter(book => book.id !== id)
+    }));
+  };
+
+  addToCurrentlyReading = (book) => {
+    this.setState((prevState) => ({
+      currentlyReading: prevState.currentlyReading.concat([book])
+    }));
+  };
+
+  removeFromWantToRead = (id) => {
+    this.setState((prevState) => ({
+      wantToRead: prevState.wantToRead.filter(book => book.id !== id)
+    }));
+  };
+
+  addToWantToRead = (book) => {
+    this.setState((prevState) => ({
+      wantToRead: prevState.wantToRead.concat([book])
+    })); 
+  };
+
+  removeFromRead = (id) => {
+    this.setState((prevState) => ({
+      read: this.state.read.filter(book => book.id !== id)
+    }));
+  };
+
+  addToRead = (book) => {
+    this.setState((prevState) => ({
+      read: prevState.read.concat([book])
+    }));
+  };
+
   componentDidMount() {
     let sortBooks;
 
     BooksAPI.getAll().then((books) => {
       sortBooks(books);
     });
-    
+
     sortBooks = (books) => {
       this.setState(() => {
         return {
@@ -36,8 +93,6 @@ class BooksApp extends React.Component {
         };
       });
     };
-    
-    
   }
 
   render() {
@@ -46,7 +101,7 @@ class BooksApp extends React.Component {
       WANT_TO_READ: 'Want to Read',
       READ: 'Read'
     };
-    
+
     const {currentlyReading, wantToRead, read} = this.state;
 
     return (
