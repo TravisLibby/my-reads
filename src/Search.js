@@ -16,7 +16,7 @@ class Search extends Component {
 
   /**
    * Gets the books based on the query.
-   * @param  {string} query The search query to perform.
+   * @param {string} query The search query to perform.
    */
   performSearch = (query) => {
     this.setState({books: []});
@@ -27,6 +27,7 @@ class Search extends Component {
             this.clearResults();
           } else {
             this.setState({books: results});
+            console.log(this.state.books);
           }
         });
     } else {
@@ -35,10 +36,14 @@ class Search extends Component {
   };
 
   render() {
+    const {moveBook} = this.props,
+          {performSearch} = this,
+          {books} = this.state;
+
     return (
       <div className="search-books">
-        <SearchBar onPerformSearch={this.performSearch} />
-        <SearchResults results={this.state.books}/>
+        <SearchBar onPerformSearch={performSearch} />
+        <SearchResults results={books} moveBook={moveBook}/>
       </div>
     )
   }
