@@ -5,6 +5,7 @@ import './App.css';
 import Header from './Header';
 import Bookshelf from './Bookshelf';
 import Search from './Search';
+import { SHELVES } from './constants/shelves';
 
 class BooksApp extends React.Component {
   state = {
@@ -22,21 +23,21 @@ class BooksApp extends React.Component {
   removeFromShelf = (book) => {
     const {shelf, id} = book;
 
-    if (shelf === 'currentlyReading') {
+    if (shelf === SHELVES.currentlyReading) {
       this.removeFromCurrentlyReading(id);
-    } else if (shelf === 'wantToRead') {
+    } else if (shelf === SHELVES.wantToRead) {
       this.removeFromWantToRead(id);
-    } else if (shelf === 'read') {
+    } else if (shelf === SHELVES.read) {
       this.removeFromRead(id);
     }
   };
 
   addToShelf = (shelf, book) => {
-    if (shelf === 'currentlyReading') {
+    if (shelf === SHELVES.currentlyReading) {
       this.addToCurrentlyReading(book);
-    } else if (shelf === 'wantToRead') {
+    } else if (shelf === SHELVES.wantToRead) {
       this.addToWantToRead(book);
-    } else if (shelf === 'read') {
+    } else if (shelf === SHELVES.read) {
       this.addToRead(book);
     }
   }
@@ -48,7 +49,7 @@ class BooksApp extends React.Component {
   };
 
   addToCurrentlyReading = (book) => {
-    book.shelf = 'currentlyReading';
+    book.shelf = SHELVES.currentlyReading;
     this.setState((prevState) => ({
       currentlyReading: prevState.currentlyReading.concat([book])
     }));
@@ -61,7 +62,7 @@ class BooksApp extends React.Component {
   };
 
   addToWantToRead = (book) => {
-    book.shelf = 'wantToRead';
+    book.shelf = SHELVES.wantToRead;
     this.setState((prevState) => ({
       wantToRead: prevState.wantToRead.concat([book])
     })); 
@@ -74,7 +75,7 @@ class BooksApp extends React.Component {
   };
 
   addToRead = (book) => {
-    book.shelf = 'read';
+    book.shelf = SHELVES.read;
     this.setState((prevState) => ({
       read: prevState.read.concat([book])
     }));
