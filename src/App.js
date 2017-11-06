@@ -48,6 +48,7 @@ class BooksApp extends React.Component {
   };
 
   addToCurrentlyReading = (book) => {
+    book.shelf = 'currentlyReading';
     this.setState((prevState) => ({
       currentlyReading: prevState.currentlyReading.concat([book])
     }));
@@ -60,6 +61,7 @@ class BooksApp extends React.Component {
   };
 
   addToWantToRead = (book) => {
+    book.shelf = 'wantToRead';
     this.setState((prevState) => ({
       wantToRead: prevState.wantToRead.concat([book])
     })); 
@@ -72,6 +74,7 @@ class BooksApp extends React.Component {
   };
 
   addToRead = (book) => {
+    book.shelf = 'read';
     this.setState((prevState) => ({
       read: prevState.read.concat([book])
     }));
