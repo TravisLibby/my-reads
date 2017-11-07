@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { formatAuthors } from './services/authorService';
 
 function Book(props) {
@@ -27,5 +28,10 @@ function Book(props) {
     </div>
   );
 }
+
+Book.propTypes = {
+  book: PropTypes.object.isRequired,
+  moveBook: PropTypes.func.isRequired
+};
 
 export default Book;
