@@ -43,7 +43,7 @@ class Search extends Component {
         <SearchBar onPerformSearch={performSearch} />
         <SearchResults results={books} moveBook={moveBook}/>
       </div>
-    )
+    );
   }
 }
 

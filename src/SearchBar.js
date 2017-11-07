@@ -8,7 +8,7 @@ class SearchBar extends Component {
 
   /**
    * Updates the search query in state and calls the search function handed to the component.
-   * @param  {string} query The query with which to perform the search.
+   * @param {string} query The query with which to perform the search.
    */
   search = (query) => {
     this.setState({query});
