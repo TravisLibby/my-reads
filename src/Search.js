@@ -8,10 +8,8 @@ class Search extends Component {
   state = {
     books: []
   };
-  
-  /**
-   * Clears the books listed in the search results.
-   */
+
+  // Clears the books listed in the search results.
   clearResults = () => this.setState({books: []});
 
   /**

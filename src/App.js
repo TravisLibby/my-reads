@@ -14,12 +14,21 @@ class BooksApp extends React.Component {
     read: []
   };
 
+  /**
+   * Removes the given book from its current shelf and places it on another shelf.
+   * @param  {string} shelf The new shelf for the book.
+   * @param  {Object} book  The book to move.
+   */
   moveBook = (shelf, book) => BooksAPI.update(book, shelf)
     .then(() => {
       this.removeFromShelf(book);
       this.addToShelf(shelf, book);
     });
 
+  /**
+   * Removes the given book from its current shelf.
+   * @param  {Object} book The book to remove from its shelf.
+   */
   removeFromShelf = (book) => {
     const {shelf, id} = book;
 
@@ -32,6 +41,11 @@ class BooksApp extends React.Component {
     }
   };
 
+  /**
+   * Adds the given book to the given shelf.
+   * @param {string} shelf The new shelf for the book.
+   * @param {Object} book  The book to add to the shelf.
+   */
   addToShelf = (shelf, book) => {
     if (shelf === SHELVES.currentlyReading) {
       this.addToCurrentlyReading(book);
@@ -42,12 +56,20 @@ class BooksApp extends React.Component {
     }
   }
 
+  /**
+   * Removes the book with the given id from the 'Currently Reading' shelf.
+   * @param  {number} id The id of the book to remove.
+   */
   removeFromCurrentlyReading = (id) => {
     this.setState((prevState) => ({
       currentlyReading: prevState.currentlyReading.filter(book => book.id !== id)
     }));
   };
 
+  /**
+   * Adds the given book to the 'Currently Reading' shelf.
+   * @param {Object} book The book to add to the shelf.
+   */
   addToCurrentlyReading = (book) => {
     book.shelf = SHELVES.currentlyReading;
     this.setState((prevState) => ({
@@ -55,12 +77,20 @@ class BooksApp extends React.Component {
     }));
   };
 
+  /**
+   * Removes the book with the given id from the 'Want to Read' shelf.
+   * @param  {number} id The id of the book to remove.
+   */
   removeFromWantToRead = (id) => {
     this.setState((prevState) => ({
       wantToRead: prevState.wantToRead.filter(book => book.id !== id)
     }));
   };
 
+  /**
+   * Adds the given book to the 'Want to Read' shelf.
+   * @param {Object} book The book to add to the shelf.
+   */
   addToWantToRead = (book) => {
     book.shelf = SHELVES.wantToRead;
     this.setState((prevState) => ({
@@ -68,12 +98,20 @@ class BooksApp extends React.Component {
     })); 
   };
 
+  /**
+   * Removes the book with the given id from the 'Read' shelf.
+   * @param  {number} id The id of the book to remove.
+   */
   removeFromRead = (id) => {
     this.setState((prevState) => ({
       read: this.state.read.filter(book => book.id !== id)
     }));
   };
 
+  /**
+   * Adds the given book to the 'Read' shelf.
+   * @param {Object} book The book to add to the shelf.
+   */
   addToRead = (book) => {
     book.shelf = SHELVES.read;
     this.setState((prevState) => ({
@@ -84,10 +122,16 @@ class BooksApp extends React.Component {
   componentDidMount() {
     let sortBooks;
 
+    // Gets all the books and distributes them to the correct shelves.
     BooksAPI.getAll().then((books) => {
       sortBooks(books);
     });
 
+    /**
+     * Distributes the given books to the correct shelves.
+     * @param  {<Array>.Object} books The collection of books to sort.
+     * @return {Object}               The updated state of the bookshelf.
+     */
     sortBooks = (books) => {
       this.setState(() => {
         return {
