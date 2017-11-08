@@ -19,7 +19,7 @@ function SearchResults(props) {
 }
 
 SearchResults.propTypes = {
-  books: PropTypes.array.isRequired,
+  results: PropTypes.array.isRequired,
   moveBook: PropTypes.func.isRequired
 };
 
