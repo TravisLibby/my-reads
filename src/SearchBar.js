@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 class SearchBar extends Component {
   state = {
@@ -31,5 +32,9 @@ class SearchBar extends Component {
     );
   }
 }
+
+SearchBar.propTypes = {
+  onPerformSearch: PropTypes.func.isRequired
+};
 
 export default SearchBar;
