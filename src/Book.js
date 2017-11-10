@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { formatAuthors } from './services/authorService';
 
 function Book(props) {
-  const {book, moveBook} = props;
+  const {book, moveBook, getShelf} = props;
 
   return (
     <div className="book">
@@ -14,7 +14,7 @@ function Book(props) {
         <div className="book-shelf-changer">
           <select 
             onChange={(e) => moveBook(e.target.value, book)}
-            value={book.shelf}>
+            value={book.shelf || getShelf(book)}>
             <option value="none" disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
@@ -31,7 +31,8 @@ function Book(props) {
 
 Book.propTypes = {
   book: PropTypes.object.isRequired,
-  moveBook: PropTypes.func.isRequired
+  moveBook: PropTypes.func.isRequired,
+  getShelf: PropTypes.func
 };
 
 export default Book;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as BooksAPI from './BooksAPI';
 import SearchBar from './SearchBar';
 import SearchResults from './SearchResults';
@@ -34,17 +35,22 @@ class Search extends Component {
   };
 
   render() {
-    const {moveBook} = this.props,
+    const {moveBook, getShelf} = this.props,
           {performSearch} = this,
           {books} = this.state;
 
     return (
       <div className="search-books">
         <SearchBar onPerformSearch={performSearch} />
-        <SearchResults results={books} moveBook={moveBook}/>
+        <SearchResults results={books} moveBook={moveBook} getShelf={getShelf} />
       </div>
     );
   }
 }
+
+Search.propTypes = {
+  moveBook: PropTypes.func.isRequired,
+  getShelf: PropTypes.func.isRequired
+};
 
 export default Search;

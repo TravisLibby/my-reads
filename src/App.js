@@ -120,6 +120,23 @@ class BooksApp extends React.Component {
       read: prevState.read.concat([book])
     }));
   };
+  
+  /**
+   * Gets the shelf that the book in the search results is currently sitting on.
+   * @param  {Object} book The book to search for in the bookshelves.
+   * @return {string}      The name of the shelf that the book is currently sitting on.
+   */
+  getShelf = (book) => {
+    const shelvedBooks = [
+      ...this.state.currentlyReading, 
+      ...this.state.wantToRead, 
+      ...this.state.read
+    ];
+    const foundBook = shelvedBooks.find(item => item.id === book.id);
+    return foundBook ? foundBook.shelf : SHELVES.none;
+  };
+  
+  
 
   componentDidMount() {
     let sortBooks;
@@ -157,7 +174,7 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Route exact path="/search" render={() => (
-          <Search moveBook={this.moveBook} />
+          <Search moveBook={this.moveBook} getShelf={this.getShelf} />
         )} />
         <Route exact path="/" render={() => (
           <div className="list-books">
