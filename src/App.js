@@ -32,7 +32,8 @@ class BooksApp extends React.Component {
    * @param  {Object} book The book to remove from its shelf.
    */
   removeFromShelf = (book) => {
-    const {shelf, id} = book;
+    const {id} = book,
+          shelf = book.shelf || this.getShelf(book);
 
     if (shelf === SHELVES.currentlyReading) {
       this.removeFromCurrentlyReading(id);
