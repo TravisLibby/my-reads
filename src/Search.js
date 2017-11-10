@@ -26,7 +26,6 @@ class Search extends Component {
             this.clearResults();
           } else {
             this.setState({books: results});
-            console.log(this.state.books);
           }
         });
     } else {
