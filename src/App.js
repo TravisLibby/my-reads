@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, Switch } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI'
 import './App.css';
 import Header from './Header';
@@ -82,7 +82,7 @@ class BooksApp extends React.Component {
 
   /**
    * Removes the book with the given id from the 'Want to Read' shelf.
-   * @param  {number} id The id of the book to remove.
+   * @param {number} id The id of the book to remove.
    */
   removeFromWantToRead = (id) => {
     this.setState((prevState) => ({
@@ -174,22 +174,27 @@ class BooksApp extends React.Component {
 
     return (
       <div className="app">
-        <Route exact path="/search" render={() => (
-          <Search moveBook={this.moveBook} getShelf={this.getShelf} />
-        )} />
-        <Route exact path="/" render={() => (
-          <div className="list-books">
-            <Header />
-            <div className="list-books-content">
-              <Bookshelf category={CATEGORIES.READING} books={currentlyReading} moveBook={this.moveBook} />
-              <Bookshelf category={CATEGORIES.WANT_TO_READ} books={wantToRead} moveBook={this.moveBook} />
-              <Bookshelf category={CATEGORIES.READ} books={read} moveBook={this.moveBook} />
+        <Switch>
+          <Route exact path="/search" render={() => (
+            <Search moveBook={this.moveBook} getShelf={this.getShelf} />
+          )} />
+          <Route exact path="/" render={() => (
+            <div className="list-books">
+              <Header />
+              <div className="list-books-content">
+                <Bookshelf category={CATEGORIES.READING} books={currentlyReading} moveBook={this.moveBook} />
+                <Bookshelf category={CATEGORIES.WANT_TO_READ} books={wantToRead} moveBook={this.moveBook} />
+                <Bookshelf category={CATEGORIES.READ} books={read} moveBook={this.moveBook} />
+              </div>
+              <div className="open-search">
+                <Link to="/search">Add a book</Link>
+              </div>
             </div>
-            <div className="open-search">
-              <Link to="/search">Add a book</Link>
-            </div>
-          </div>
-        )} />
+          )} />
+          <Route component={() => (
+            <p>Sorry. This page does not exist.</p>
+          )} />
+        </Switch>
       </div>
     );
   }
