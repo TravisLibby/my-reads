@@ -36,8 +36,6 @@ class BooksApp extends React.Component {
   };
   
   componentDidMount() {
-    let sortBooks;
-
     // Gets all the books and distributes them to the correct shelves.
     BooksAPI.getAll().then((books) => {
       this.setState({books});
